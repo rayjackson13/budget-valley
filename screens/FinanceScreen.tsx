@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { Text, View } from 'components/Themed';
+import { SafeAreaView, Text, View } from 'components/Themed';
 
 export default function FinanceScreen() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Tab Two</Text>
-    </View>
+    </SafeAreaView>
   );
 }
 

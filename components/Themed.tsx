@@ -62,7 +62,7 @@ export function AppBar(props: React.ComponentProps<typeof DefaultAppBar>) {
 
   return (
     <DefaultAppBar.Header 
-      style={[{ backgroundColor, elevation: 2 }, style]}
+      style={[{ backgroundColor, elevation: 2, zIndex: 9, position: 'relative' }, style]}
       dark
       statusBarHeight={height} 
       {...otherProps}>
