@@ -13,16 +13,15 @@ import useColorScheme from '../hooks/useColorScheme';
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark
+  colorName: keyof typeof Colors.light & keyof typeof Colors.dark,
 ) {
   const theme = useColorScheme();
   const colorFromProps = props[theme];
 
   if (colorFromProps) {
     return colorFromProps;
-  } else {
-    return Colors[theme][colorName];
   }
+  return Colors[theme][colorName];
 }
 
 type ThemeProps = {
@@ -61,14 +60,15 @@ export function AppBar(props: React.ComponentProps<typeof DefaultAppBar>) {
   const height = useSafeAreaInsets().top;
 
   return (
-    <DefaultAppBar.Header 
+    <DefaultAppBar.Header
       style={[{ backgroundColor, elevation: 2, zIndex: 9, position: 'relative' }, style]}
       dark
-      statusBarHeight={height} 
-      {...otherProps}>
+      statusBarHeight={height}
+      {...otherProps}
+    >
       {children}
     </DefaultAppBar.Header>
-  )
+  );
 }
 
 export function AppBarContent(props: ThemeProps & React.ComponentProps<typeof DefaultAppBar.Content>) {
@@ -77,9 +77,12 @@ export function AppBarContent(props: ThemeProps & React.ComponentProps<typeof De
   const color = theme.colors.text;
 
   return (
-    <DefaultAppBar.Content 
-      titleStyle={[{ fontSize: Platform.OS === 'ios' ? 20 : 20, fontWeight: 'bold', color, textAlign: 'center' }, titleStyle]}
+    <DefaultAppBar.Content
+      titleStyle={[
+        { fontSize: Platform.OS === 'ios' ? 20 : 20, fontWeight: 'bold', color, textAlign: 'center' },
+        titleStyle,
+      ]}
       {...otherProps}
     />
-  )
+  );
 }
