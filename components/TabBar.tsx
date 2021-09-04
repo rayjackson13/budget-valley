@@ -1,8 +1,8 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { BottomTabBarProps, BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
-import { SafeAreaView, Text, View } from './Themed';
 import { useTheme } from 'react-native-paper';
+import { SafeAreaView, Text, View } from './Themed';
 
 export default function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const theme = useTheme();
@@ -53,8 +53,12 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
               onLongPress={onLongPress}
               style={{ flex: 1 }}
             >
-              {options.tabBarIcon && options.tabBarIcon({ focused: isFocused, color: isFocused ? activeColor : '#222', size: 24 })}
-              <Text style={{ color: isFocused ? activeColor : '#222', textAlign: 'center' }}>
+              {options.tabBarIcon && options.tabBarIcon({
+                focused: isFocused,
+                color: isFocused ? activeColor : '#8f8f8f',
+                size: 24,
+              })}
+              <Text style={{ color: isFocused ? activeColor : '#8f8f8f', textAlign: 'center' }}>
                 {label}
               </Text>
             </TouchableOpacity>

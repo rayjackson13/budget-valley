@@ -64,6 +64,7 @@ function BottomTabNavigator() {
         options={() => ({
           title: 'Home',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          headerShown: false,
         })}
       />
       <BottomTab.Screen

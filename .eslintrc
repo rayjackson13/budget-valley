@@ -21,6 +21,9 @@
         "react",
         "@typescript-eslint"
     ],
+    "globals": {
+        "ReactNativePaper": "readonly"
+    },
     "rules": {
         "react/jsx-filename-extension": "off",
         "no-use-before-define": "off",
