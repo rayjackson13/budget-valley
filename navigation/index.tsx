@@ -1,26 +1,22 @@
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
 import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, Theme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { useTheme } from 'react-native-paper';
 
 import Header from 'components/Header';
 import TabBar from 'components/TabBar';
+import TabBarIcon from 'components/TabBarIcon';
 import ModalScreen from 'screens/ModalScreen';
 import NotFoundScreen from 'screens/NotFoundScreen';
 import HomeScreen from 'screens/HomeScreen';
 import FinanceScreen from 'screens/FinanceScreen';
 import { RootStackParamList, RootTabParamList } from 'types';
 import LinkingConfiguration from './LinkingConfiguration';
-import TabBarIcon from 'components/TabBarIcon';
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation({ theme }: { theme?: Theme }) {
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-    >
+    <NavigationContainer linking={LinkingConfiguration} theme={theme}>
       <RootNavigator />
     </NavigationContainer>
   );

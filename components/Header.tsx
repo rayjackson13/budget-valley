@@ -6,7 +6,7 @@ export default function Header(props: any) {
   const { route } = props;
   const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
   return (
-    <AppBar dark>
+    <AppBar>
       <AppBarContent title={routeName} />
     </AppBar>
   );

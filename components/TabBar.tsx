@@ -2,8 +2,11 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { BottomTabBarProps, BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 import { SafeAreaView, Text, View } from './Themed';
+import { useTheme } from 'react-native-paper';
 
 export default function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+  const theme = useTheme();
+  const activeColor = theme.colors.accent;
   const getLabel = (options: BottomTabNavigationOptions, routeName: string) => {
     const { tabBarLabel, title } = options;
     if (tabBarLabel) return tabBarLabel;
@@ -50,8 +53,8 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
               onLongPress={onLongPress}
               style={{ flex: 1 }}
             >
-              {options.tabBarIcon && options.tabBarIcon({ focused: isFocused, color: isFocused ? '#673ab7' : '#222', size: 24 })}
-              <Text style={{ color: isFocused ? '#673ab7' : '#222', textAlign: 'center' }}>
+              {options.tabBarIcon && options.tabBarIcon({ focused: isFocused, color: isFocused ? activeColor : '#222', size: 24 })}
+              <Text style={{ color: isFocused ? activeColor : '#222', textAlign: 'center' }}>
                 {label}
               </Text>
             </TouchableOpacity>
