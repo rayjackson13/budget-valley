@@ -13,7 +13,6 @@ const theme = merge(darkTheme, {
   roundness: 16,
   dark: true,
   colors: {
-    // background: '#2e2e2e',
     surface: '#14110F',
     accent: '#FFC812',
   },

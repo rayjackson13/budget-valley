@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, Theme } from '@react-navigation/native';
+import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from 'react-native-paper';
 
 import Header from 'components/Header';
 import TabBar from 'components/TabBar';
 import TabBarIcon from 'components/TabBarIcon';
+import HeaderAction from 'components/HeaderAction';
 import ModalScreen from 'screens/ModalScreen';
 import NotFoundScreen from 'screens/NotFoundScreen';
 import HomeScreen from 'screens/HomeScreen';
@@ -30,13 +32,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        header: (props) => (
-          <Header {...props} />
-        ),
-      }}
-    >
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
@@ -59,7 +55,7 @@ function BottomTabNavigator() {
       backBehavior="initialRoute"
       tabBar={(props: BottomTabBarProps) => <TabBar {...props} />}
       screenOptions={{
-        headerShown: false,
+        header: (props: BottomTabHeaderProps) => <Header {...props} />,
       }}
     >
       <BottomTab.Screen
@@ -76,6 +72,7 @@ function BottomTabNavigator() {
         options={() => ({
           title: 'Finance',
           tabBarIcon: ({ color }) => <TabBarIcon name="money-bill-wave-alt" color={color} />,
+          headerRight: () => <HeaderAction onPress={() => alert('create!')} icon="plus" />,
         })}
       />
     </BottomTab.Navigator>

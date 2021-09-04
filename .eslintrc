@@ -21,9 +21,6 @@
         "react",
         "@typescript-eslint"
     ],
-    "global": [
-        "JSX"
-    ],
     "rules": {
         "react/jsx-filename-extension": "off",
         "no-use-before-define": "off",

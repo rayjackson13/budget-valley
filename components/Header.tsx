@@ -1,13 +1,13 @@
 import React from 'react';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
+import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import { AppBar, AppBarContent } from './Themed';
 
-export default function Header(props: any) {
-  const { route } = props;
-  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
+export default function Header({ options }: BottomTabHeaderProps) {
+  const { title, headerRight } = options;
   return (
     <AppBar>
-      <AppBarContent title={routeName} />
+      <AppBarContent title={title} />
+      { headerRight && headerRight({})}
     </AppBar>
   );
 }
