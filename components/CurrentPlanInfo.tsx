@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
-import { Text } from 'react-native-paper';
+import { ProgressBar, Text, useTheme } from 'react-native-paper';
 import { View } from './Themed';
 
 type CurrentPlanInfoProps = {
@@ -8,47 +8,71 @@ type CurrentPlanInfoProps = {
 }
 
 export default function CurrentPlanInfo({ style }: CurrentPlanInfoProps) {
+  const theme = useTheme();
+  const styles = getStyles(theme);
+  // TODO: remove hard coded data.
+  const current = 9;
   const total = 14;
   return (
     <View style={[styles.wrap, style]}>
       <Text style={styles.mark}>
         Current Plan:
       </Text>
-      <View style={styles.row}>
-        <Text style={styles.text}>
-          Day
-          {' '}
-          <Text style={styles.current}>9</Text>
-        </Text>
-        <Text style={[styles.text, styles.total]}>{` / ${total}`}</Text>
+      <View>
+        <View style={styles.dayProgressWrap}>
+          <Text style={styles.text}>
+            Day
+            {' '}
+            <Text style={styles.current}>{current}</Text>
+            <Text style={styles.text}>{` / ${total}`}</Text>
+          </Text>
+        </View>
+        <View style={styles.progressBarWrap}>
+          <View style={styles.progressBarInner}>
+            <ProgressBar
+              progress={current / total}
+              style={styles.progressBar}
+              color={theme.colors.primary}
+            />
+          </View>
+        </View>
       </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const getStyles = ({ colors }: ReactNativePaper.Theme) => StyleSheet.create({
   wrap: {
-    alignItems: 'flex-end',
+    paddingVertical: 20,
+    width: '100%',
   },
   mark: {
     textTransform: 'uppercase',
     fontSize: 16,
-    textAlign: 'right',
-    marginBottom: 12,
+    textAlign: 'center',
+    marginBottom: 0,
   },
   text: {
-    fontSize: 32,
+    fontSize: 24,
+    textTransform: 'uppercase',
   },
   current: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: '#8a2be2',
+    color: colors.accentAlt,
   },
-  total: {
-    marginTop: 8,
-    fontSize: 24,
+  dayProgressWrap: {
+    alignItems: 'center',
   },
-  row: {
-    flexDirection: 'row',
+  progressBarWrap: {
+    marginTop: 4,
+    width: '100%',
+    alignItems: 'center',
+  },
+  progressBarInner: {
+    width: '70%',
+  },
+  progressBar: {
+    width: '100%',
   },
 });

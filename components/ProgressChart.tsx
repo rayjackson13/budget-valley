@@ -1,8 +1,7 @@
-import React from 'react';
-import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Easing, StyleSheet, ViewStyle } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { useTheme } from 'react-native-paper';
-import Animated, { interpolate, multiply } from 'react-native-reanimated';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { View } from './Themed';
 
@@ -19,8 +18,21 @@ export default function ProgressChart({ progress, style }: ProgressChartProps) {
   const strokeWidth = 15;
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
-  const alpha = interpolate(progress, [0, 1], [Math.PI * 2, 0]);
-  const strokeDashoffset = multiply(alpha, radius);
+  const perimeter = radius * Math.PI * 2;
+  const strokeDashoffset = perimeter - perimeter * progress;
+  const flowAnim = useRef(new Animated.Value(perimeter)).current;
+  const flowInAnimation = () => {
+    Animated.timing(flowAnim, {
+      easing: Easing.linear,
+      toValue: strokeDashoffset,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  useEffect(() => {
+    flowInAnimation();
+  }, [progress]);
 
   return (
     <View style={[style, styles.wrap]}>
@@ -43,8 +55,8 @@ export default function ProgressChart({ progress, style }: ProgressChartProps) {
             strokeWidth={strokeWidth}
             stroke={theme.colors.accent}
             strokeDasharray={`${circumference} ${circumference}`}
-            strokeDashoffset={strokeDashoffset}
             transform={`rotate(-90) translate(-${size} 0)`}
+            strokeDashoffset={flowAnim}
             strokeLinecap="round"
           />
         </Svg>

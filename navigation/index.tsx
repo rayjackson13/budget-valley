@@ -3,7 +3,6 @@ import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/b
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useTheme } from 'react-native-paper';
 
 import Header from 'components/Header';
 import TabBar from 'components/TabBar';
@@ -56,6 +55,7 @@ function BottomTabNavigator() {
       tabBar={(props: BottomTabBarProps) => <TabBar {...props} />}
       screenOptions={{
         header: (props: BottomTabHeaderProps) => <Header {...props} />,
+        unmountOnBlur: true,
       }}
     >
       <BottomTab.Screen

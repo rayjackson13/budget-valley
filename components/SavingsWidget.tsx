@@ -1,40 +1,49 @@
-import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Headline, Text, useTheme } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { Button, Text, useTheme } from 'react-native-paper';
+import { FontAwesome5 } from '@expo/vector-icons';
 import CurrentPlanInfo from './CurrentPlanInfo';
 import ProgressChart from './ProgressChart';
 import { View } from './Themed';
+import Counter from './Counter';
 
 export default function SavingsWidget() {
   const theme = useTheme();
   const styles = useStyles(theme);
   // TODO: Remove hard coded data.
-  const saved = 219.63;
-  const goal = 500;
+  const saved = Math.floor(316.86);
+  const goal = Math.floor(500);
+  const progress = saved / goal > 1 ? 1 : saved / goal;
+
   return (
     <View style={styles.wrap}>
       <View style={styles.row}>
-        <ProgressChart progress={saved / goal} style={styles.chart} />
+        <ProgressChart progress={progress} style={styles.chart} />
         <CurrentPlanInfo style={styles.plan} />
       </View>
 
-      <Text>
-        <Text style={styles.saved}>{`₽${saved.toFixed(2)}`}</Text>
-        <Text style={styles.goal}>{` out of ₽${goal.toFixed(2)}`}</Text>
+      <Text style={{ marginBottom: 15 }}>
+        <Text style={styles.saved}>
+          <Counter value={saved} prefix="₽" style={styles.saved} />
+        </Text>
+        <Text style={styles.goal}>{` out of ₽${goal}`}</Text>
       </Text>
 
-      <TouchableOpacity>
-        <Headline style={styles.title}>
-          <Text style={styles.secondary}>Current plan </Text>
-          <FontAwesome5
-            name="chevron-right"
-            size={18}
-            color={theme.colors.text}
-            style={styles.icon}
-          />
-        </Headline>
-      </TouchableOpacity>
+      <Button
+        mode="contained"
+        color={theme.colors.notification}
+        style={{ paddingVertical: 4 }}
+        theme={theme}
+        onPress={() => console.log('nav to plan')}
+      >
+        <Text style={styles.buttonText}>Current plan </Text>
+        <FontAwesome5
+          name="chevron-right"
+          size={16}
+          color={theme.colors.text}
+          style={styles.icon}
+        />
+      </Button>
 
     </View>
   );
@@ -48,23 +57,9 @@ const useStyles = ({ colors }: ReactNativePaper.Theme) => StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 24,
   },
-  headline: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  title: {
-    margin: 0,
-    padding: 0,
-    top: 0,
-    marginBottom: 30,
-  },
   accent: {
     fontWeight: 'bold',
     color: colors.accent,
-  },
-  secondary: {
-    color: colors.text,
   },
   icon: {
     marginLeft: 10,
@@ -85,5 +80,9 @@ const useStyles = ({ colors }: ReactNativePaper.Theme) => StyleSheet.create({
   goal: {
     fontSize: 20,
     color: colors.placeholder,
+  },
+  buttonText: {
+    fontSize: 18,
+    letterSpacing: 0,
   },
 });
