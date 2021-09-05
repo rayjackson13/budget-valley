@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, Image, LayoutChangeEvent, StyleSheet, View, ViewStyle } from 'react-native';
 import { Text, Title, useTheme } from 'react-native-paper';
-import ProfileImage from 'assets/images/profile.jpeg';
+import ProfileImage from 'assets/images/profile-default.jpeg';
 
 type ProfileBarProps = {
   style?: ViewStyle
