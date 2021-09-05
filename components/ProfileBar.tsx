@@ -31,7 +31,7 @@ export default function ProfileBar({ style }: ProfileBarProps) {
   const runFadeInAnimation = () => {
     Animated.timing(fadeInAnim, {
       useNativeDriver: true,
-      duration: 600,
+      duration: 1000,
       toValue: 1,
       easing: Easing.bezier(0.16, 1, 0.3, 1),
     }).start();
