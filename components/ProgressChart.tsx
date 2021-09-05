@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Easing, StyleSheet, ViewStyle } from 'react-native';
+import { View, Animated, Easing, StyleSheet, ViewStyle } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { useTheme } from 'react-native-paper';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { View } from './Themed';
 
 type ProgressChartProps = {
   progress: number
@@ -11,6 +10,7 @@ type ProgressChartProps = {
 }
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+const AnimatedIcon = Animated.createAnimatedComponent(FontAwesome5);
 
 export default function ProgressChart({ progress, style }: ProgressChartProps) {
   const theme = useTheme();
@@ -20,11 +20,32 @@ export default function ProgressChart({ progress, style }: ProgressChartProps) {
   const circumference = radius * 2 * Math.PI;
   const perimeter = radius * Math.PI * 2;
   const strokeDashoffset = perimeter - perimeter * progress;
+  const progressAnim = useRef(new Animated.Value(0)).current;
   const flowAnim = useRef(new Animated.Value(perimeter)).current;
+  const iconFadeOutAnim = progressAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+  });
+  const iconRotateAnim = progressAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  });
+
   const flowInAnimation = () => {
     Animated.timing(flowAnim, {
-      easing: Easing.linear,
+      easing: progress < 1
+        ? Easing.bezier(0.34, 1.56, 0.64, 1)
+        : Easing.bezier(0.22, 1, 0.36, 1),
       toValue: strokeDashoffset,
+      duration: progress < 1 ? 600 : 1500,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const progressAnimation = () => {
+    Animated.timing(progressAnim, {
+      easing: Easing.linear,
+      toValue: progress,
       duration: 300,
       useNativeDriver: true,
     }).start();
@@ -32,6 +53,7 @@ export default function ProgressChart({ progress, style }: ProgressChartProps) {
 
   useEffect(() => {
     flowInAnimation();
+    progressAnimation();
   }, [progress]);
 
   return (
@@ -62,8 +84,24 @@ export default function ProgressChart({ progress, style }: ProgressChartProps) {
         </Svg>
 
         <View style={styles.iconWrap}>
-          <FontAwesome5 size={52} color={theme.colors.text} name="calendar" style={styles.icon} />
+          <AnimatedIcon
+            size={52}
+            color={theme.colors.text}
+            name="calendar"
+            style={[progress >= 1 && { opacity: iconFadeOutAnim, transform: [{ rotate: iconRotateAnim }] }]}
+          />
         </View>
+
+        {progress >= 1 && (
+          <View style={styles.iconWrap}>
+            <AnimatedIcon
+              size={52}
+              color={theme.colors.accent}
+              name="check"
+              style={[{ opacity: progressAnim, transform: [{ rotate: iconRotateAnim }] }]}
+            />
+          </View>
+        )}
       </View>
     </View>
   );
@@ -87,5 +125,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
+
+  },
+  fillIcon: {
+
   },
 });

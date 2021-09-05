@@ -1,13 +1,16 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
 import { FontAwesome5 } from '@expo/vector-icons';
 import CurrentPlanInfo from './CurrentPlanInfo';
 import ProgressChart from './ProgressChart';
-import { View } from './Themed';
 import Counter from './Counter';
 
-export default function SavingsWidget() {
+type SavingsWidgetProps = {
+  style?: ViewStyle
+}
+
+export default function SavingsWidget({ style }: SavingsWidgetProps) {
   const theme = useTheme();
   const styles = useStyles(theme);
   // TODO: Remove hard coded data.
@@ -16,7 +19,7 @@ export default function SavingsWidget() {
   const progress = saved / goal > 1 ? 1 : saved / goal;
 
   return (
-    <View style={styles.wrap}>
+    <View style={[styles.wrap, style]}>
       <View style={styles.row}>
         <ProgressChart progress={progress} style={styles.chart} />
         <CurrentPlanInfo style={styles.plan} />
@@ -31,8 +34,8 @@ export default function SavingsWidget() {
 
       <Button
         mode="contained"
-        color={theme.colors.notification}
-        style={{ paddingVertical: 4 }}
+        color={theme.colors.darkGrey}
+        style={styles.button}
         theme={theme}
         onPress={() => console.log('nav to plan')}
       >
@@ -56,6 +59,7 @@ const useStyles = ({ colors }: ReactNativePaper.Theme) => StyleSheet.create({
   row: {
     flexDirection: 'row',
     marginBottom: 24,
+    paddingRight: 20,
   },
   accent: {
     fontWeight: 'bold',
@@ -80,6 +84,9 @@ const useStyles = ({ colors }: ReactNativePaper.Theme) => StyleSheet.create({
   goal: {
     fontSize: 20,
     color: colors.placeholder,
+  },
+  button: {
+    paddingVertical: 4,
   },
   buttonText: {
     fontSize: 18,

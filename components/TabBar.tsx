@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { BottomTabBarProps, BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
-import { useTheme } from 'react-native-paper';
-import { SafeAreaView, Text, View } from './Themed';
+import { Text, useTheme } from 'react-native-paper';
 
 export default function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const theme = useTheme();
@@ -15,7 +15,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView edges={['bottom', 'left', 'right']}>
       <View style={{ flexDirection: 'row', paddingVertical: 10 }}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];

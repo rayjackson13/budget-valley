@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
-import { SafeAreaView } from 'components/Themed';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function FinanceScreen() {
   return (

@@ -1,11 +1,11 @@
-import React from 'react';
-import { Text, TextStyle } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Easing, Text, TextStyle } from 'react-native';
 import { useCountUp } from 'use-count-up';
 
 type CounterProps = {
   value: number
   duration?: number
-  style: TextStyle
+  style: TextStyle | TextStyle[]
   prefix?: string
 }
 
@@ -16,10 +16,11 @@ export default function Counter({ value, duration = 1000, style, prefix }: Count
     duration: duration / 1000,
     easing: 'easeOutCubic',
   });
+
   return (
-    <Text style={style}>
+    <Animated.Text style={style}>
       {prefix}
       {count}
-    </Text>
+    </Animated.Text>
   );
 }

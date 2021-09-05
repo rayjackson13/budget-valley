@@ -14,6 +14,7 @@ declare global {
   namespace ReactNativePaper {
     interface ThemeColors {
       accentAlt: string;
+      darkGrey: string;
     }
   }
 }
@@ -27,6 +28,7 @@ const theme = merge(darkTheme, {
     surface: '#14110F',
     accent: '#FFC812',
     accentAlt: '#8a2be2',
+    darkGrey: '#1d1d1d',
   },
 });
 

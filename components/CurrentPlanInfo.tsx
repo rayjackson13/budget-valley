@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import { ProgressBar, Text, useTheme } from 'react-native-paper';
-import { View } from './Themed';
 
 type CurrentPlanInfoProps = {
   style: ViewStyle
@@ -32,7 +31,7 @@ export default function CurrentPlanInfo({ style }: CurrentPlanInfoProps) {
             <ProgressBar
               progress={current / total}
               style={styles.progressBar}
-              color={theme.colors.primary}
+              color={theme.colors.text}
             />
           </View>
         </View>
