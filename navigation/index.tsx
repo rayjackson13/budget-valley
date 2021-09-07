@@ -13,6 +13,7 @@ import NotFoundScreen from 'screens/NotFoundScreen';
 import HomeScreen from 'screens/HomeScreen';
 import FinanceScreen from 'screens/FinanceScreen';
 import { RootStackParamList, RootTabParamList } from 'types';
+import Icon from 'components/Icon';
 import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({ theme }: { theme?: Theme }) {
@@ -73,7 +74,12 @@ function BottomTabNavigator() {
         options={() => ({
           title: 'Finance',
           tabBarIcon: ({ color }) => <TabBarIcon name="money-bill-wave-alt" color={color} />,
-          headerRight: () => <HeaderAction onPress={() => alert('create!')} icon="plus" />,
+          headerRight: () => (
+            <HeaderAction
+              onPress={() => alert('create!')}
+              icon={(props) => <Icon name="plus" {...props} />}
+            />
+          ),
         })}
       />
     </BottomTab.Navigator>

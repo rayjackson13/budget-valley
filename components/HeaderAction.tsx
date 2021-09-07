@@ -16,7 +16,7 @@ export default function HeaderAction({ onPress, icon }: HeaderActionProps) {
     <Appbar.Action
       icon={icon}
       color={theme.colors.accent}
-      size={30}
+      size={20}
       onPress={onPress}
       style={styles.button}
     />
@@ -26,7 +26,6 @@ export default function HeaderAction({ onPress, icon }: HeaderActionProps) {
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    right: 0,
-    top: 0,
+    right: 6,
   },
 });
