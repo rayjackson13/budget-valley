@@ -8,6 +8,7 @@ import merge from 'deepmerge';
 
 import useCachedResources from './hooks/useCachedResources';
 import Navigation from './navigation';
+import { LogBox } from 'react-native';
 
 /* eslint-disable no-unused-vars */
 declare global {
@@ -30,6 +31,8 @@ const theme = merge(darkTheme, {
     darkGrey: '#1d1d1d',
   },
 });
+
+LogBox.ignoreLogs(['Remote debugger']);
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
