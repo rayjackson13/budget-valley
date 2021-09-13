@@ -1,19 +1,19 @@
-import * as React from 'react';
+import React from 'react';
 import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import Icon from 'components/Icon';
 import Header from 'components/Header';
 import TabBar from 'components/TabBar';
 import TabBarIcon from 'components/TabBarIcon';
 import HeaderAction from 'components/HeaderAction';
-import ModalScreen from 'screens/ModalScreen';
+import AddPlanModal from 'screens/AddPlanModal';
 import NotFoundScreen from 'screens/NotFoundScreen';
 import HomeScreen from 'screens/HomeScreen';
 import FinanceScreen from 'screens/FinanceScreen';
 import { RootStackParamList, RootTabParamList } from 'types';
-import Icon from 'components/Icon';
 import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({ theme }: { theme?: Theme }) {
@@ -36,7 +36,11 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen
+          name="AddPlanModal"
+          component={AddPlanModal}
+          options={{ gestureEnabled: false }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -71,12 +75,12 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="Finance"
         component={FinanceScreen}
-        options={() => ({
+        options={({ navigation }) => ({
           title: 'Finance',
           tabBarIcon: ({ color }) => <TabBarIcon name="money-bill-wave-alt" color={color} />,
           headerRight: () => (
             <HeaderAction
-              onPress={() => alert('create!')}
+              onPress={() => navigation.navigate('AddPlanModal')}
               icon={(props) => <Icon name="plus" {...props} />}
             />
           ),
