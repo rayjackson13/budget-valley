@@ -21,6 +21,8 @@ export default function HomeScreen() {
     wait(500).then(() => setRefreshing(false));
   }, []);
 
+  const userData = { name: 'Kostya' };
+
   return (
     <SafeAreaView edges={['top', 'left', 'right']} style={styles.screen}>
       {/* TODO: move banner to a separate component. */}
@@ -47,8 +49,8 @@ export default function HomeScreen() {
           />
       )}
       >
-        <ProfileBar style={{ marginBottom: 30 }} />
-        <SavingsWidget style={{ marginBottom: 30 }} />
+        <ProfileBar user={userData} style={{ marginBottom: 30 }} />
+        <SavingsWidget saved={316.86} goal={500} style={{ marginBottom: 30 }} />
         <SpendTodayWidget fundsAvailable={1811} />
       </ScrollView>
     </SafeAreaView>

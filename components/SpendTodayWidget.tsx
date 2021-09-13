@@ -5,7 +5,7 @@ import Counter from './Counter';
 
 type SpendTodayWidgetProps = {
   style?: ViewStyle | ViewStyle[]
-  fundsAvailable: number
+  fundsAvailable?: number
 }
 
 export default function SpendTodayWidget({ style, fundsAvailable = 0 }: SpendTodayWidgetProps) {
@@ -32,7 +32,13 @@ export default function SpendTodayWidget({ style, fundsAvailable = 0 }: SpendTod
   return (
     <Animated.View style={[styles.wrap, style, { opacity, transform: [{ translateY }] }]}>
       <Text style={styles.text}>Today you can spend up to:</Text>
-      <Counter duration={2000} value={fundsAvailable} prefix="₽" style={[styles.text, styles.accent]} />
+      <Counter
+        duration={2000}
+        value={Math.floor(fundsAvailable)}
+        prefix="₽"
+        style={[styles.text, styles.accent]}
+        testID="availableFunds"
+      />
     </Animated.View>
   );
 }

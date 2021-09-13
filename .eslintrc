@@ -22,7 +22,11 @@
         "@typescript-eslint"
     ],
     "globals": {
-        "ReactNativePaper": "readonly"
+        "ReactNativePaper": "readonly",
+        "it": "readonly",
+        "expect": "readonly",
+        "jest": "readonly",
+        "afterEach": "readonly"
     },
     "rules": {
         "react/jsx-filename-extension": "off",

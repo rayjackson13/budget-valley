@@ -8,15 +8,21 @@ import Counter from './Counter';
 
 type SavingsWidgetProps = {
   style?: ViewStyle
+  saved: number
+  goal: number
 }
 
-export default function SavingsWidget({ style }: SavingsWidgetProps) {
+const getProgress = (saved: number, goal: number) => {
+  if (!goal) return 1;
+  return saved / goal > 1 ? 1 : saved / goal;
+};
+
+export default function SavingsWidget({ style, saved = 0, goal = 0 }: SavingsWidgetProps) {
   const theme = useTheme();
   const styles = useStyles(theme);
-  // TODO: Remove hard coded data.
-  const saved = Math.floor(316.86);
-  const goal = Math.floor(500);
-  const progress = saved / goal > 1 ? 1 : saved / goal;
+  const savedAmount = Math.floor(saved);
+  const desiredAmount = Math.floor(goal);
+  const progress = getProgress(savedAmount, desiredAmount);
 
   return (
     <View style={[styles.wrap, style]}>
@@ -27,9 +33,9 @@ export default function SavingsWidget({ style }: SavingsWidgetProps) {
 
       <Text style={{ marginBottom: 15 }}>
         <Text style={styles.saved}>
-          <Counter value={saved} prefix="₽" style={styles.saved} />
+          <Counter value={savedAmount} prefix="₽" style={styles.saved} testID="savedCounter" />
         </Text>
-        <Text style={styles.goal}>{` out of ₽${goal}`}</Text>
+        <Text style={styles.goal} testID="totalText">{` out of ₽${desiredAmount}`}</Text>
       </Text>
 
       <Button
