@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Animated, Easing, Text, TextStyle } from 'react-native';
+import React from 'react';
+import { Animated, TextStyle } from 'react-native';
 import { useCountUp } from 'use-count-up';
 
 type CounterProps = {
@@ -7,9 +7,10 @@ type CounterProps = {
   duration?: number
   style: TextStyle | TextStyle[]
   prefix?: string
+  testID?: string
 }
 
-export default function Counter({ value, duration = 1000, style, prefix }: CounterProps) {
+export default function Counter({ value, duration = 1000, style, prefix, testID }: CounterProps) {
   const { value: count } = useCountUp({
     isCounting: true,
     end: value,
@@ -18,7 +19,7 @@ export default function Counter({ value, duration = 1000, style, prefix }: Count
   });
 
   return (
-    <Animated.Text style={style}>
+    <Animated.Text style={style} testID={testID}>
       {prefix}
       {count}
     </Animated.Text>

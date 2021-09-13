@@ -1,13 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, Image, LayoutChangeEvent, StyleSheet, View, ViewStyle } from 'react-native';
+import {
+  Animated,
+  Easing,
+  Image,
+  ImageSourcePropType,
+  LayoutChangeEvent,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { Text, Title, useTheme } from 'react-native-paper';
 import ProfileImage from 'assets/images/profile-default.jpeg';
 
-type ProfileBarProps = {
-  style?: ViewStyle
+type UserData = {
+  name: string
+  image?: ImageSourcePropType
 }
 
-export default function ProfileBar({ style }: ProfileBarProps) {
+type ProfileBarProps = {
+  style?: ViewStyle
+  user: UserData
+}
+
+export default function ProfileBar({ style, user }: ProfileBarProps) {
   const [viewWidth, setViewWidth] = useState(0);
   const fadeInAnim = useRef(new Animated.Value(0)).current;
   const theme = useTheme();
@@ -48,12 +63,12 @@ export default function ProfileBar({ style }: ProfileBarProps) {
     >
       <View style={styles.row}>
         <Animated.View style={[styles.avatar, { transform: [{ translateX }, { rotate }], opacity: fadeInAnim }]}>
-          <Image source={ProfileImage} style={styles.image} resizeMode="cover" />
+          <Image source={user.image || ProfileImage} style={styles.image} resizeMode="cover" />
         </Animated.View>
         <Animated.View style={[styles.content, { opacity: fadeInAnim }]}>
           <Title style={styles.title}>
             {'Welcome back, '}
-            <Text style={styles.accent}>Kostya</Text>
+            <Text style={styles.accent} testID="username">{user.name}</Text>
             !
           </Title>
         </Animated.View>
