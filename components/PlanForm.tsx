@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
@@ -7,21 +8,41 @@ import moment from 'moment';
 import Icon from './Icon';
 
 interface FormValues {
-  name: string;
+  title: string;
   startDate: Date | undefined;
   endDate: Date | undefined;
 }
 
-function PlanForm({ values, setFieldValue }: FormikProps<FormValues>) {
+type PlanFormProps = {
+  setTitle: (title: string) => void
+  title: string
+}
+
+function PlanForm({ values, setFieldValue, setTitle }: PlanFormProps & FormikProps<FormValues>) {
   const theme = useTheme();
   const styles = useStyles(theme);
-  console.log(values);
 
   const onDateChange = (date: moment.Moment, type: 'START_DATE' | 'END_DATE') => {
     setFieldValue(
       type === 'START_DATE' ? 'startDate' : 'endDate',
       date ? date.toDate() : undefined,
     );
+
+    if (!date) return;
+    if (type === 'START_DATE') {
+      setDateTitle(date);
+      return;
+    }
+
+    setDateTitle(moment(values.startDate), date);
+  };
+
+  const setDateTitle = (startDate: moment.Moment, endDate?: moment.Moment) => {
+    const title = !endDate
+      ? `${startDate.format('DD MMM \'YY')} — `
+      : `${startDate.format('DD MMM \'YY')} — ${endDate.format('DD MMM \'YY')}`;
+    setFieldValue('title', title);
+    setTitle(title);
   };
 
   return (
@@ -61,11 +82,14 @@ function PlanForm({ values, setFieldValue }: FormikProps<FormValues>) {
 
 export default withFormik({
   displayName: 'PlanForm',
-  mapPropsToValues: (): FormValues => ({
-    name: 'New Plan',
-    startDate: undefined,
-    endDate: undefined,
-  }),
+  mapPropsToValues: (props: PlanFormProps): FormValues => {
+    const { title } = props;
+    return ({
+      title,
+      startDate: undefined,
+      endDate: undefined,
+    });
+  },
   handleSubmit: (values, props) => {
     console.log('submit', values, props);
   },

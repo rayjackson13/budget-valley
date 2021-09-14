@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { IconButton, Text, useTheme } from 'react-native-paper';
@@ -11,6 +11,7 @@ type AddPlanModalProps = NativeStackScreenProps<RootStackParamList, 'AddPlanModa
 export default function AddPlanModal({ navigation }: AddPlanModalProps) {
   const theme = useTheme();
   const styles = useStyles(theme);
+  const [title, setTitle] = useState('New Plan');
 
   const onExitModal = () => {
     navigation.goBack();
@@ -19,14 +20,14 @@ export default function AddPlanModal({ navigation }: AddPlanModalProps) {
   return (
     <View style={styles.container}>
       <View style={styles.head}>
-        <Text style={styles.title}>New Plan</Text>
+        <Text style={styles.title}>{title}</Text>
         <IconButton
           style={styles.exit}
           icon={(props) => <Icon name="times" {...props} />}
           onPress={onExitModal}
         />
       </View>
-      <PlanForm />
+      <PlanForm setTitle={setTitle} title={title} />
     </View>
   );
 }

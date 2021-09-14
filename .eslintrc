@@ -44,7 +44,6 @@
         ],
         "import/no-extraneous-dependencies": "off",
         "react/jsx-props-no-spreading": "off",
-        "no-unused-vars": "warn",
         "object-curly-newline": "off",
         "max-len": [
             "warn",
@@ -53,7 +52,9 @@
             }
         ],
         "react/require-default-props": "off",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["warn"]
     },
     "settings": {
         "import/resolver": {
