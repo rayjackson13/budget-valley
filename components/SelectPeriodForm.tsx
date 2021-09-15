@@ -1,10 +1,12 @@
 /* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Text, useTheme } from 'react-native-paper';
 import Calendar from 'react-native-calendar-picker';
 import { FormikProps, withFormik } from 'formik';
 import moment from 'moment';
+import { RootStackParamList } from 'types';
 import Icon from './Icon';
 
 interface FormValues {
@@ -13,12 +15,14 @@ interface FormValues {
   endDate: Date | undefined;
 }
 
-type PlanFormProps = {
+type SelectPeriodFormProps = {
   setTitle: (title: string) => void
   title: string
+  navigation: NativeStackNavigationProp<RootStackParamList, 'AddPlanModal'>
 }
 
-function PlanForm({ values, setFieldValue, setTitle }: PlanFormProps & FormikProps<FormValues>) {
+function SelectPeriodForm(props: SelectPeriodFormProps & FormikProps<FormValues>) {
+  const { values, setFieldValue, setTitle, submitForm } = props;
   const theme = useTheme();
   const styles = useStyles(theme);
 
@@ -72,7 +76,7 @@ function PlanForm({ values, setFieldValue, setTitle }: PlanFormProps & FormikPro
         dayShape="circle"
         onDateChange={onDateChange}
       />
-      <Button mode="text" style={styles.button}>
+      <Button mode="text" style={styles.button} onPress={submitForm}>
         <Text style={styles.buttonText}>Next </Text>
         <Icon style={styles.icon} name="chevron-right" color={theme.colors.accent} size={16} />
       </Button>
@@ -82,18 +86,18 @@ function PlanForm({ values, setFieldValue, setTitle }: PlanFormProps & FormikPro
 
 export default withFormik({
   displayName: 'PlanForm',
-  mapPropsToValues: (props: PlanFormProps): FormValues => {
+  mapPropsToValues: (props: SelectPeriodFormProps): FormValues => {
     const { title } = props;
     return ({
       title,
-      startDate: undefined,
-      endDate: undefined,
+      startDate: moment().toDate(),
+      endDate: moment().add('weeks', 2).toDate(),
     });
   },
-  handleSubmit: (values, props) => {
-    console.log('submit', values, props);
+  handleSubmit: (values, { props: { navigation } }) => {
+    navigation.pop();
   },
-})(PlanForm);
+})(SelectPeriodForm);
 
 const useStyles = ({ colors, roundness }: ReactNativePaper.Theme) => StyleSheet.create({
   form: {
@@ -122,7 +126,7 @@ const useStyles = ({ colors, roundness }: ReactNativePaper.Theme) => StyleSheet.
     zIndex: 99999,
   },
   button: {
-    marginTop: 50,
+    marginTop: 20,
     alignItems: 'flex-end',
   },
   buttonText: {

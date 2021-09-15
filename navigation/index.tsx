@@ -9,7 +9,7 @@ import Header from 'components/Header';
 import TabBar from 'components/TabBar';
 import TabBarIcon from 'components/TabBarIcon';
 import HeaderAction from 'components/HeaderAction';
-import AddPlanModal from 'screens/AddPlanModal';
+import AddPlanModal from 'screens/SelectPeriodModal';
 import NotFoundScreen from 'screens/NotFoundScreen';
 import HomeScreen from 'screens/HomeScreen';
 import FinanceScreen from 'screens/FinanceScreen';
@@ -39,7 +39,12 @@ function RootNavigator() {
         <Stack.Screen
           name="AddPlanModal"
           component={AddPlanModal}
-          options={{ gestureEnabled: false }}
+          options={{
+            gestureEnabled: false,
+            cardStyle: {
+              backgroundColor: 'transparent',
+            },
+          }}
         />
       </Stack.Group>
     </Stack.Navigator>
