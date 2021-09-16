@@ -17,6 +17,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   AddPlanModal: undefined;
   NotFound: undefined;
+  CustomizePlan: object | undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

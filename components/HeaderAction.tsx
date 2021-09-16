@@ -7,10 +7,11 @@ import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 type HeaderActionProps = {
   onPress: (event?: GestureResponderEvent) => void
   icon: IconSource
+  position?: 'left' | 'right'
 }
 /* eslint-enable no-unused-vars */
 
-export default function HeaderAction({ onPress, icon }: HeaderActionProps) {
+export default function HeaderAction({ onPress, icon, position = 'right' }: HeaderActionProps) {
   const theme = useTheme();
   return (
     <Appbar.Action
@@ -18,7 +19,7 @@ export default function HeaderAction({ onPress, icon }: HeaderActionProps) {
       color={theme.colors.accent}
       size={20}
       onPress={onPress}
-      style={styles.button}
+      style={[styles.button, position === 'left' && styles.buttonLeft]}
     />
   );
 }
@@ -26,6 +27,13 @@ export default function HeaderAction({ onPress, icon }: HeaderActionProps) {
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    right: 6,
+    right: 12,
+    zIndex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  buttonLeft: {
+    left: 12,
   },
 });

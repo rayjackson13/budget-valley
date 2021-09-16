@@ -25,6 +25,7 @@
     "eslint-import-resolver-typescript": "^2.4.0",
     "expo": "~42.0.1",
     "expo-asset": "~8.3.2",
+    "expo-blur": "~9.0.3",
     "expo-constants": "~11.0.1",
     "expo-font": "~9.2.1",
     "expo-linking": "~2.3.1",
@@ -44,7 +45,8 @@
     "react-native-svg": "12.1.1",
     "react-native-web": "~0.13.12",
     "react-test-renderer": "^17.0.2",
-    "use-count-up": "^2.3.1"
+    "use-count-up": "^2.3.1",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
