@@ -95,7 +95,13 @@ export default withFormik({
     });
   },
   handleSubmit: (values, { props: { navigation } }) => {
+    if (!values.startDate || !values.endDate) return;
     navigation.pop();
+    navigation.navigate('CustomizePlan', {
+      title: values.title,
+      startDate: values.startDate.toJSON(),
+      endDate: values.endDate.toJSON(),
+    });
   },
 })(SelectPeriodForm);
 

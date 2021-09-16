@@ -1,6 +1,7 @@
 import React from 'react';
 import { Appbar as DefaultAppBar, useTheme } from 'react-native-paper';
 import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
+import { StackHeaderProps } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
 
 type AppBarContentProps = React.ComponentProps<typeof DefaultAppBar.Content> & {
@@ -12,12 +13,13 @@ function AppBarContent({ theme, ...otherProps }: AppBarContentProps) {
   return <DefaultAppBar.Content titleStyle={[styles.content, { color }]} {...otherProps} />;
 }
 
-export default function Header({ options }: BottomTabHeaderProps) {
-  const { title, headerRight } = options;
+export default function Header({ options }: BottomTabHeaderProps | StackHeaderProps) {
+  const { title, headerRight, headerLeft } = options;
   const theme = useTheme();
   const backgroundColor = theme.colors.background;
   return (
     <DefaultAppBar.Header style={[styles.header, { backgroundColor }]}>
+      { headerLeft && headerLeft({})}
       <AppBarContent title={title} theme={theme} />
       { headerRight && headerRight({})}
     </DefaultAppBar.Header>

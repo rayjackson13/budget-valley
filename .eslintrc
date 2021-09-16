@@ -48,7 +48,7 @@
         "max-len": [
             "warn",
             {
-                "code": 120
+                "code": 100
             }
         ],
         "react/require-default-props": "off",
