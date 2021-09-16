@@ -91,7 +91,7 @@ export default withFormik({
     return ({
       title,
       startDate: moment().toDate(),
-      endDate: moment().add('weeks', 2).toDate(),
+      endDate: moment().add(2, 'weeks').toDate(),
     });
   },
   handleSubmit: (values, { props: { navigation } }) => {
