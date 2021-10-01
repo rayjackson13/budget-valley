@@ -1,14 +1,21 @@
+import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, ScrollView } from 'react-native';
-// import { ScrollView } from 'react-native-gesture-handler';
 import { Banner, useTheme } from 'react-native-paper';
-import SavingsWidget from 'components/SavingsWidget';
-import SpendTodayWidget from 'components/SpendTodayWidget';
-import { FontAwesome5 } from '@expo/vector-icons';
-import ProfileBar from 'components/ProfileBar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import ProfileBar from 'components/ProfileBar';
+import SavingsWidget from 'components/SavingsWidget';
+import SpendTodayWidget from 'components/SpendTodayWidget';
+
 const wait = (timeout: number) => new Promise((resolve) => setTimeout(resolve, timeout));
+
+function BannerIcon({ size }: { size: number }) {
+  const { colors } = useTheme();
+  return (
+    <FontAwesome5 color={colors.text} size={size} name="info-circle" />
+  );
+}
 
 export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
@@ -21,18 +28,17 @@ export default function HomeScreen() {
     wait(500).then(() => setRefreshing(false));
   }, []);
 
-  const userData = { name: 'Kostya' };
+  const userData = null;
 
   return (
     <SafeAreaView edges={['top', 'left', 'right']} style={styles.screen}>
-      {/* TODO: move banner to a separate component. */}
       <Banner
         visible={bannerVisible}
         actions={[{
           label: 'Got it',
           onPress: () => setBannerVisible(false),
         }]}
-        icon={({ size }) => <FontAwesome5 color={theme.colors.text} size={size} name="info-circle" />}
+        icon={BannerIcon}
       >
         Here you will find the tips on how to spend money efficiently and save funds gradually.
         Also here you'll see how much money you've saved over a certain period of time.
@@ -50,8 +56,8 @@ export default function HomeScreen() {
       )}
       >
         <ProfileBar user={userData} style={{ marginBottom: 30 }} />
-        <SavingsWidget saved={316.86} goal={500} style={{ marginBottom: 30 }} />
-        <SpendTodayWidget fundsAvailable={1811} />
+        <SavingsWidget saved={0} goal={0} style={{ marginBottom: 30 }} />
+        <SpendTodayWidget fundsAvailable={0} />
       </ScrollView>
     </SafeAreaView>
   );

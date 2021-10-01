@@ -9,10 +9,13 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { Text, Title, useTheme } from 'react-native-paper';
-import ProfileImage from 'assets/images/profile-default.jpeg';
+import { useTheme } from 'react-native-paper';
 
-type UserData = {
+import WelcomeText from './WelcomeText';
+
+import DefaultProfilePic from 'assets/images/profile-default.jpeg';
+
+export type UserData = null | {
   name: string
   image?: ImageSourcePropType
 }
@@ -56,21 +59,27 @@ export default function ProfileBar({ style, user }: ProfileBarProps) {
     runFadeInAnimation();
   }, []);
 
+  const viewStyle = { padding: viewPadding, opacity: fadeInAnim };
+  const picStyle = {
+    transform: [{ translateX }, { rotate }],
+    opacity: fadeInAnim,
+  };
+
   return (
     <Animated.View
-      style={[styles.wrap, style, { padding: viewPadding, opacity: fadeInAnim }]}
+      style={[styles.wrap, style, viewStyle]}
       onLayout={onLayout}
     >
       <View style={styles.row}>
-        <Animated.View style={[styles.avatar, { transform: [{ translateX }, { rotate }], opacity: fadeInAnim }]}>
-          <Image source={user.image || ProfileImage} style={styles.image} resizeMode="cover" />
+        <Animated.View style={[styles.avatar, picStyle]}>
+          <Image
+            source={user && user.image ? user.image : DefaultProfilePic}
+            style={styles.image}
+            resizeMode="cover"
+          />
         </Animated.View>
         <Animated.View style={[styles.content, { opacity: fadeInAnim }]}>
-          <Title style={styles.title}>
-            {'Welcome back, '}
-            <Text style={styles.accent} testID="username">{user.name}</Text>
-            !
-          </Title>
+          <WelcomeText user={user} theme={theme} />
         </Animated.View>
       </View>
     </Animated.View>
