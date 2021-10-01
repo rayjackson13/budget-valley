@@ -10,8 +10,10 @@ export default function CurrentPlanInfo({ style }: CurrentPlanInfoProps) {
   const theme = useTheme();
   const styles = getStyles(theme);
   // TODO: remove hard coded data.
-  const current = 9;
-  const total = 14;
+  const current = 0;
+  const total = 0;
+  const progress = Number.isNaN(current / total) ? 0 : current / total;
+
   return (
     <View style={[styles.wrap, style]}>
       <Text style={styles.mark}>
@@ -29,7 +31,7 @@ export default function CurrentPlanInfo({ style }: CurrentPlanInfoProps) {
         <View style={styles.progressBarWrap}>
           <View style={styles.progressBarInner}>
             <ProgressBar
-              progress={current / total}
+              progress={progress}
               style={styles.progressBar}
               color={theme.colors.text}
             />

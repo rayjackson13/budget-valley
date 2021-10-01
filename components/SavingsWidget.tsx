@@ -1,10 +1,11 @@
+import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
-import { FontAwesome5 } from '@expo/vector-icons';
+
+import Counter from './Counter';
 import CurrentPlanInfo from './CurrentPlanInfo';
 import ProgressChart from './ProgressChart';
-import Counter from './Counter';
 
 type SavingsWidgetProps = {
   style?: ViewStyle
