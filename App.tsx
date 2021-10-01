@@ -1,5 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import React from 'react';
+import { LogBox } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { DarkTheme, Provider as PaperProvider } from 'react-native-paper';
 import { DarkTheme as NavDarkTheme } from '@react-navigation/native';
@@ -8,7 +9,6 @@ import merge from 'deepmerge';
 
 import useCachedResources from './hooks/useCachedResources';
 import Navigation from './navigation';
-import { LogBox } from 'react-native';
 
 /* eslint-disable no-unused-vars */
 declare global {

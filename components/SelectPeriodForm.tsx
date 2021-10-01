@@ -1,27 +1,52 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Text, useTheme } from 'react-native-paper';
 import Calendar from 'react-native-calendar-picker';
 import { FormikProps, withFormik } from 'formik';
 import moment from 'moment';
+import { RootStackParamList } from 'types';
 import Icon from './Icon';
 
 interface FormValues {
-  name: string;
+  title: string;
   startDate: Date | undefined;
   endDate: Date | undefined;
 }
 
-function PlanForm({ values, setFieldValue }: FormikProps<FormValues>) {
+type SelectPeriodFormProps = {
+  setTitle: (title: string) => void
+  title: string
+  navigation: NativeStackNavigationProp<RootStackParamList, 'AddPlanModal'>
+}
+
+function SelectPeriodForm(props: SelectPeriodFormProps & FormikProps<FormValues>) {
+  const { values, setFieldValue, setTitle, submitForm } = props;
   const theme = useTheme();
   const styles = useStyles(theme);
-  console.log(values);
 
   const onDateChange = (date: moment.Moment, type: 'START_DATE' | 'END_DATE') => {
     setFieldValue(
       type === 'START_DATE' ? 'startDate' : 'endDate',
       date ? date.toDate() : undefined,
     );
+
+    if (!date) return;
+    if (type === 'START_DATE') {
+      setDateTitle(date);
+      return;
+    }
+
+    setDateTitle(moment(values.startDate), date);
+  };
+
+  const setDateTitle = (startDate: moment.Moment, endDate?: moment.Moment) => {
+    const title = !endDate
+      ? `${startDate.format('DD MMM \'YY')} — `
+      : `${startDate.format('DD MMM \'YY')} — ${endDate.format('DD MMM \'YY')}`;
+    setFieldValue('title', title);
+    setTitle(title);
   };
 
   return (
@@ -51,7 +76,7 @@ function PlanForm({ values, setFieldValue }: FormikProps<FormValues>) {
         dayShape="circle"
         onDateChange={onDateChange}
       />
-      <Button mode="text" style={styles.button}>
+      <Button mode="text" style={styles.button} onPress={submitForm}>
         <Text style={styles.buttonText}>Next </Text>
         <Icon style={styles.icon} name="chevron-right" color={theme.colors.accent} size={16} />
       </Button>
@@ -61,15 +86,24 @@ function PlanForm({ values, setFieldValue }: FormikProps<FormValues>) {
 
 export default withFormik({
   displayName: 'PlanForm',
-  mapPropsToValues: (): FormValues => ({
-    name: 'New Plan',
-    startDate: undefined,
-    endDate: undefined,
-  }),
-  handleSubmit: (values, props) => {
-    console.log('submit', values, props);
+  mapPropsToValues: (props: SelectPeriodFormProps): FormValues => {
+    const { title } = props;
+    return ({
+      title,
+      startDate: moment().toDate(),
+      endDate: moment().add(2, 'weeks').toDate(),
+    });
   },
-})(PlanForm);
+  handleSubmit: (values, { props: { navigation } }) => {
+    if (!values.startDate || !values.endDate) return;
+    navigation.pop();
+    navigation.navigate('CustomizePlan', {
+      title: values.title,
+      startDate: values.startDate.toJSON(),
+      endDate: values.endDate.toJSON(),
+    });
+  },
+})(SelectPeriodForm);
 
 const useStyles = ({ colors, roundness }: ReactNativePaper.Theme) => StyleSheet.create({
   form: {
@@ -98,7 +132,7 @@ const useStyles = ({ colors, roundness }: ReactNativePaper.Theme) => StyleSheet.
     zIndex: 99999,
   },
   button: {
-    marginTop: 50,
+    marginTop: 20,
     alignItems: 'flex-end',
   },
   buttonText: {

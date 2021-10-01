@@ -44,19 +44,15 @@
         ],
         "import/no-extraneous-dependencies": "off",
         "react/jsx-props-no-spreading": "off",
-        "no-unused-vars": "warn",
         "object-curly-newline": "off",
         "max-len": [
             "warn",
             {
-                "code": 120
+                "code": 100
             }
         ],
         "react/require-default-props": "off",
         "react/prop-types": "off",
-        "@typescript-eslint/no-unused-vars": [
-            "warn"
-        ],
         "import/order": [
             "error",
             {
@@ -66,7 +62,9 @@
                     "caseInsensitive": false
                 }
             }
-        ]
+        ],
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["warn"]
     },
     "settings": {
         "import/resolver": {
